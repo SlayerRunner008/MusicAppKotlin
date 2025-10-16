@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.foundation.layout)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

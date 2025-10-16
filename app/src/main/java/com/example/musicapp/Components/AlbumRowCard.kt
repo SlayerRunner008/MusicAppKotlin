@@ -4,8 +4,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,15 +26,17 @@ import coil3.compose.AsyncImage
 import com.example.musicapp.Models.Album
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 
 @Composable
 fun AlbumRowCard(album: Album, onClick: () -> Unit) {
     Box(
         modifier = Modifier
-            .width(300.dp)
-            .height(250.dp)
+            .width(200.dp)
+            .height(180.dp)
             .clip(RoundedCornerShape(12.dp))
             .clickable { onClick() }
     ) {
@@ -47,39 +51,49 @@ fun AlbumRowCard(album: Album, onClick: () -> Unit) {
         Box(
             modifier = Modifier
                 .matchParentSize()
-                .background(Color.Black.copy(alpha = 0.5f))
+                .background(Color(0xFF120000).copy(alpha = 0.1f))
         )
 
 
-        Column(
+        Row(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
+                .height(180.dp)
+                .padding(top = 80.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .background(Color(0xFF2B0000).copy(alpha = 0.6f))
                 .padding(16.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Spacer(modifier = Modifier.height(8.dp)) // Espacio superior
+            Spacer(modifier = Modifier.height(8.dp))
 
-            Column {
+            Column (
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp)
+            ) {
                 Text(
                     text = album.title,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = Color.White
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    maxLines = 2
                 )
                 Text(
                     text = album.artist,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.LightGray
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.LightGray,
+                    maxLines = 2
                 )
             }
 
-            // Botón de reproducción
             Icon(
                 imageVector = Icons.Default.PlayArrow,
                 contentDescription = "Reproducir",
                 tint = Color.White,
                 modifier = Modifier
                     .size(40.dp)
-                    .align(Alignment.CenterHorizontally)
+
             )
         }
     }

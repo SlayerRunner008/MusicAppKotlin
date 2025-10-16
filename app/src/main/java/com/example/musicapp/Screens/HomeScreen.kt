@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,6 +35,8 @@ import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import com.example.musicapp.Components.RecentAlbumsCard
 
 @Composable
 fun HomeScreen(navController: NavController){
@@ -68,11 +71,14 @@ fun HomeScreen(navController: NavController){
     Box (
         modifier = Modifier
             .fillMaxSize()
+            .background(Color(0xFF120000))
             .padding(10.dp)
+            .padding(vertical = 30.dp)
     ){
         LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             item {
                 GreetingCard()
@@ -82,23 +88,26 @@ fun HomeScreen(navController: NavController){
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 20.dp)
+                        .padding(vertical = 20.dp)
                 ) {
-                    Text(text = "Albums")
+                    Text(text = "Albums",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.White
+                    )
                     Spacer(modifier = Modifier.weight(1f))
-                    Text(text = "See more")
+                    Text(text = "See more",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color(0xFFD32F2F)
+                    )
                 }
             }
 
             item {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(250.dp)
-                        .background(Color.Red) // para testeo visual
-                ) {
                     LazyRow(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize()
+                            .padding(bottom = 20.dp),
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         items(albums) { album ->
@@ -107,8 +116,16 @@ fun HomeScreen(navController: NavController){
                             })
                         }
                     }
-                }
             }
+
+
+            items(albums) { album ->
+                RecentAlbumsCard (album = album, onClick = {
+                    navController.navigate(AlbumDetailScreenRoute(album.id))
+                })
+            }
+
+
 
 
 
