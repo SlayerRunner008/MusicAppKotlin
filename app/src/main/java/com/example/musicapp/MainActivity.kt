@@ -35,12 +35,12 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navController,
                         startDestination = HomeScreenRoute
-                    ){
-                        composable<HomeScreenRoute>{
+                    ) {
+                        composable<HomeScreenRoute> {
                             HomeScreen(navController)
                         }
-                        composable<AlbumDetailScreenRoute>{ backstack ->
-                            val args = backstack.toRoute<AlbumDetailScreenRoute>()
+                        composable<AlbumDetailScreenRoute> { backstackEntry ->
+                            val args = backstackEntry.toRoute<AlbumDetailScreenRoute>()
                             AlbumDetail(args.id)
                         }
                     }
