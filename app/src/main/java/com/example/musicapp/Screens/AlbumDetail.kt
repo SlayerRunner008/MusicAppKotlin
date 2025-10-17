@@ -23,6 +23,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import com.example.musicapp.Components.AlbumImageCard
+import com.example.musicapp.Components.ArtistDetailCard
+import com.example.musicapp.Components.DescriptionCard
 import com.example.musicapp.Components.RecentAlbumsCard
 import com.example.musicapp.Components.ReproducerCard
 import com.example.musicapp.Components.SongsCard
@@ -73,10 +75,17 @@ fun AlbumDetail(id: String ){
                 .fillMaxWidth()
                 .padding(bottom = 60.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
                 AlbumImageCard(album)
+            }
+
+            item {
+                DescriptionCard(album)
+            }
+
+            item {
+                ArtistDetailCard(album)
             }
 
             items(10){ index ->

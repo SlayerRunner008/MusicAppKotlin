@@ -23,8 +23,8 @@ import com.example.musicapp.Models.Album
 fun AlbumImageCard(album: Album?){
     Box (
         modifier = Modifier
-            .width(300.dp)
-            .height(300.dp),
+            .width(400.dp)
+            .height(400.dp),
         contentAlignment = Alignment.Center
     ) {
 
