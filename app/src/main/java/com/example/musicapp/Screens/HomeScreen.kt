@@ -1,4 +1,5 @@
 package com.example.musicapp.Screens
+import android.content.ClipData
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,15 +37,17 @@ import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.text.font.FontWeight
 import com.example.musicapp.Components.RecentAlbumsCard
+import com.example.musicapp.Components.ReproducerCard
 
 @Composable
 fun HomeScreen(navController: NavController){
     var albums by remember {
         mutableStateOf(listOf<Album>())
     }
-
+    val album = albums.find { it.id == "682243ecf60db4caa642a48a" }
     var loading by remember {
         mutableStateOf(true)
     }
@@ -77,7 +81,8 @@ fun HomeScreen(navController: NavController){
     ){
         LazyColumn(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(bottom = 60.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             item {
@@ -122,14 +127,16 @@ fun HomeScreen(navController: NavController){
             items(albums) { album ->
                 RecentAlbumsCard (album = album, onClick = {
                     navController.navigate(AlbumDetailScreenRoute(album.id))
+
                 })
             }
 
-
-
-
-
         }
+
+        ReproducerCard(album = album ,
+            modifier = Modifier
+                .align(alignment = Alignment.BottomCenter)
+            )
     }
 }
 

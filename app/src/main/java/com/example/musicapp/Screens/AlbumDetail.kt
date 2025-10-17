@@ -21,7 +21,6 @@ fun AlbumDetail(id: String ){
 
     var album by remember {
         mutableStateOf<Album?>(null)
-
     }
 
     LaunchedEffect(true) {

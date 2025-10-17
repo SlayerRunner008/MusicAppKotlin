@@ -51,7 +51,7 @@ fun RecentAlbumsCard (album: Album, onClick: () -> Unit){
                 .height(70.dp)
                 .width(70.dp)
                 .clip(RoundedCornerShape(16.dp))
-                .background(Color.Red)
+                .background(Color(0xFF8B0000))
         )
 
         Column (
