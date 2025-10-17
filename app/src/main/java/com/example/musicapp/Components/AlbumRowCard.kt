@@ -37,7 +37,7 @@ fun AlbumRowCard(album: Album, onClick: () -> Unit) {
         modifier = Modifier
             .width(200.dp)
             .height(180.dp)
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(16.dp))
             .clickable { onClick() }
     ) {
 
@@ -59,7 +59,7 @@ fun AlbumRowCard(album: Album, onClick: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(180.dp)
-                .padding(top = 80.dp)
+                .padding(top = 75.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(Color(0xFF2B0000).copy(alpha = 0.6f))
                 .padding(16.dp),
