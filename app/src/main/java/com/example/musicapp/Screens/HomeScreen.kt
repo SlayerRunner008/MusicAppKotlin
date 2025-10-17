@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,13 +38,12 @@ import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.text.font.FontWeight
 import com.example.musicapp.Components.RecentAlbumsCard
 import com.example.musicapp.Components.ReproducerCard
 
 @Composable
-fun HomeScreen(navController: NavController){
+fun HomeScreen(navController: NavController) {
     var albums by remember {
         mutableStateOf(listOf<Album>())
     }
@@ -64,52 +64,61 @@ fun HomeScreen(navController: NavController){
             val result = withContext(Dispatchers.IO) {
                 service.getAllAlbums()
             }
-            Log.i("HomeScreen","${result}")
+            Log.i("HomeScreen", "${result}")
             albums = result
             loading = false
-        } catch (e: Exception){
+        } catch (e: Exception) {
             loading = false
-            Log.e("HomeScreen",e.toString())
+            Log.e("HomeScreen", e.toString())
         }
     }
-    Box (
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF120000))
             .padding(10.dp)
             .padding(vertical = 30.dp)
-    ){
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 60.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            item {
-                GreetingCard()
-            }
+    ) {
+        if (loading) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+                color = Color(0xFF8B0000)
+            )
+        } else {
 
-            item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 20.dp)
-                ) {
-                    Text(text = "Albums",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.White
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(text = "See more",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color(0xFFD32F2F)
-                    )
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 60.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                item {
+                    GreetingCard()
                 }
-            }
 
-            item {
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 20.dp)
+                    ) {
+                        Text(
+                            text = "Albums",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.White
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        Text(
+                            text = "See more",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color(0xFFD32F2F)
+                        )
+                    }
+                }
+
+                item {
                     LazyRow(
                         modifier = Modifier.fillMaxSize()
                             .padding(bottom = 20.dp),
@@ -121,22 +130,24 @@ fun HomeScreen(navController: NavController){
                             })
                         }
                     }
+                }
+
+
+                items(albums) { album ->
+                    RecentAlbumsCard(album = album, onClick = {
+                        navController.navigate(AlbumDetailScreenRoute(album.id))
+
+                    })
+                }
+
             }
 
-
-            items(albums) { album ->
-                RecentAlbumsCard (album = album, onClick = {
-                    navController.navigate(AlbumDetailScreenRoute(album.id))
-
-                })
-            }
-
-        }
-
-        ReproducerCard(album = album ,
-            modifier = Modifier
-                .align(alignment = Alignment.BottomCenter)
+            ReproducerCard(
+                album = album,
+                modifier = Modifier
+                    .align(alignment = Alignment.BottomCenter)
             )
+        }
     }
 }
 

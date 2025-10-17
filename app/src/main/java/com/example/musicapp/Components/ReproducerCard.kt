@@ -32,9 +32,10 @@ fun ReproducerCard(album: Album?,modifier: Modifier = Modifier){
     Row (
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(50.dp))
+            .clip(RoundedCornerShape(30.dp))
             .background(Color(0xFF8B0000))
-            .padding(3.dp),
+            .padding(3.dp)
+            .padding(horizontal = 5.dp),
         verticalAlignment = Alignment.CenterVertically
     ){
         Box(
@@ -53,7 +54,7 @@ fun ReproducerCard(album: Album?,modifier: Modifier = Modifier){
 
         Column (
             modifier = Modifier
-                .padding(12.dp)
+                .padding(8.dp)
                 .weight(1f),
 
             ) {
@@ -82,7 +83,6 @@ fun ReproducerCard(album: Album?,modifier: Modifier = Modifier){
                 .align(Alignment.CenterVertically)
                 .background(Color.Black)
                 .padding(horizontal = 8.dp)
-
         )
     }
 }
